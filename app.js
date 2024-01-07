@@ -16,6 +16,9 @@ const apps = [
 ];
 console.log(apps[1].name);
 
+
+// console.log(apps.length)
+
 app.get("/app", (req, res) => {
   res.json(apps);
 });
@@ -30,8 +33,12 @@ app.get("/app/:id", (req, res) => {
 
 app.post("/app/:id", (req, res) => {
   const vBody = req.body;
-  apps.push(vBody);
-  res.setHeader("Auth", "xxxxxxxxxxxx").send("Return response");
+  const vLengthOfApps =  apps.push(vBody);
+  res.status(201).json({
+    status: true,
+    message: 'განცხადება ჩაიწერა დედისმტყვნელად',
+    result: vLengthOfApps
+  });
 });
 
 app.put("/app", (req, res) => {
