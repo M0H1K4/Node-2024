@@ -1,6 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
 
 const vApp = {
   id: 1,
@@ -16,7 +19,6 @@ const apps = [
 ];
 console.log(apps[1].name);
 
-
 // console.log(apps.length)
 
 app.get("/app", (req, res) => {
@@ -31,18 +33,28 @@ app.get("/app/:id", (req, res) => {
   res.json(result);
 });
 
-app.post("/app/:id", (req, res) => {
+app.post("/app", (req, res) => {
   const vBody = req.body;
-  const vLengthOfApps =  apps.push(vBody);
+  const vLengthOfApps = apps.push(vBody);
   res.status(201).json({
     status: true,
-    message: 'განცხადება ჩაიწერა დედისმტყვნელად',
-    result: vLengthOfApps
+    message: "განცხადება ჩაიწერა დედისმტყვნელად",
+    result: vLengthOfApps,
   });
 });
 
-app.put("/app", (req, res) => {
-  res.setHeader("Contentt-Type", "application/json").send("Hello World!");
+app.put("/app/:id", (req, res) => {
+  const vId = parseInt(req.params.id);
+  const vBody = req.body;
+  const result = apps.find((app) => {
+    return app.id === vId;
+  });
+  result.name = vBody.name;
+  res.json({
+    status: true,
+    message: "ყორიფელი კარგადაა",
+    result: result,
+  });
 });
 
 app.listen(port, () => {
