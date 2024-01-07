@@ -14,14 +14,14 @@ const apps = [
   { id: 4, name: "App 4" },
   { id: 5, name: "App 5" },
 ];
-console.log(apps[0].name);
+console.log(apps[1].name);
 
 app.get("/app", (req, res) => {
   res.json(apps);
 });
 
 app.get("/app/:id", (req, res) => {
-  const vId = pareseInt(req.params.id);
+  const vId = parseInt(req.params.id);
   const result = apps.find((app) => {
     return app.id === vId;
   });
@@ -29,10 +29,12 @@ app.get("/app/:id", (req, res) => {
 });
 
 app.post("/app/:id", (req, res) => {
-  res.setHeader("Contentt-Type", "application/json").send("Hello World!");
+  const vBody = req.body;
+  apps.push(vBody);
+  res.setHeader("Auth", "xxxxxxxxxxxx").send("Return response");
 });
 
-app.put("/ap", (req, res) => {
+app.put("/app", (req, res) => {
   res.setHeader("Contentt-Type", "application/json").send("Hello World!");
 });
 
