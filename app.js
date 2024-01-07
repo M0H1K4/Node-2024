@@ -57,6 +57,10 @@ app.put("/app/:id", (req, res) => {
   });
 });
 
+app.get("index", (req, res) => {
+  res.status(200).sendFile(__dirname + "/views/index.html");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
